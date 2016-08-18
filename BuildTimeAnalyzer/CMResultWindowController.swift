@@ -159,9 +159,10 @@ class CMResultWindowController: NSWindowController {
     @IBAction func exportCSVClicked(sender: AnyObject) {
 
         let csvString = NSMutableString()
-        csvString.appendString("Time, Path, Code, Filename, References\n")
+        csvString.appendString("Time,File,Code,Reference Count,Path\n")
         for measurement in dataSource where measurement.time > 0{
-            csvString.appendString("\(measurement.time),\(measurement.path),\(measurement.code.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())),\(measurement.filename),\(measurement.references) \n")
+            let codeRef = measurement.code.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+            csvString.appendString("\"\(measurement.time)\",\"\(measurement.filename)\",\"\(codeRef)\",\"\(measurement.references)\",\"\(measurement.path)\"\n")
         }
 
         // Converting it to NSData.
